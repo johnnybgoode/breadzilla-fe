@@ -1,0 +1,57 @@
+[
+  {
+    "name": "Favorite Sourdough Bread",
+    "slug": "sourdough-bread",
+    "credit": "Per Echo Noir",
+    "image": "https://plus.unsplash.com/premium_vector-1711987376991-5542a1793046?q=80&w=2340&auto=format&fit=crop",
+    "portions": { "value": 1, "unit": "loaf", "units": "loaves" },
+    "ingredients": [
+      { "name": "Starter", "value": 202, "unit": "g" },
+      { "name": "Unbleached bread flour", "value": 450, "unit": "g" },
+      { "name": "Water (warm, not hot)", "value": 285, "unit": "g" },
+      { "name": "Salt", "value": 14, "unit": "g" },
+      { "name": "Malt powder", "value": 1.75, "unit": "tbsp" }
+    ],
+    "steps": [
+      {
+        "title": "Prepare starter (morning)",
+        "description": "Feed starter 1:2:2 in the morning\nLet ferment 3-4 hours at room temperature\nUse just before peak: domed, full of bubbles, spoonful floats on water",
+        "time": 10
+      },
+      {
+        "title": "Mix dough (midday or evening)",
+        "description": "In large mixing bowl thoroughly mix FLOUR and MALTED MILK powder\nAdd WATER and STARTER\nLet rest 30 minutes",
+        "time": 10
+      },
+      {
+        "title": "Add SALT",
+        "description": "Dampen hands first. Mix until just incorporated (I add a layer, fold, repeat until all salt is folded in, then mix by hand\nDough will feel sticky, but manageable\nLet rest 30 minutes",
+        "time": 10
+      },
+      {
+        "title": "4-way fold (1)",
+        "description": "Stretch and fold, rotate 90 degrees and repeat 3 times for a total of four folds.\nDough should double and feel aerated - like a slightly jiggly belly",
+        "time": 1800
+      },
+      {
+        "title": "4-way fold (2)",
+        "description": "Stretch and fold, rotate 90 degrees and repeat 3 times for a total of four folds.\nDough should double and feel aerated - like a slightly jiggly belly",
+        "time": 1800
+      },
+      {
+        "title": "4-way fold (3)",
+        "description": "Stretch and fold, rotate 90 degrees and repeat 3 times for a total of four folds.\nDough should double and feel aerated - like a slightly jiggly belly",
+        "time": 1800
+      },
+      {
+        "title": "4-way fold (4)",
+        "description": "Stretch and fold, rotate 90 degrees and repeat 3 times for a total of four folds.\nDough should double and feel aerated - like a slightly jiggly belly",
+        "time": 1800
+      },
+      {
+        "title": "Shape and final proof",
+        "description": ""
+      }
+    ]
+  }
+]

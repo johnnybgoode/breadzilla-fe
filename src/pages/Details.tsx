@@ -1,81 +1,63 @@
-import {useSuspenseQuery} from '@tanstack/react-query'
-import {Link, Navigate, useParams} from 'react-router'
-import {getFruits} from '@/api/fruits'
-import {Head} from '@/components/Head'
-import {ImageAttribution} from '@/components/ImageAttribution'
-import {useMediaQuery} from '@/utils/useMediaQuery'
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { useState } from 'react';
+import { useParams } from 'react-router';
+import { getRecipes } from '@/api/recipes';
+import { Button } from '@/components/Button';
+import { Head } from '@/components/Head';
+import { Heading } from '@/components/Heading';
+import { Image } from '@/components/Image';
+import { Ingredients } from '@/components/Ingredients';
+import { LoadingOrError } from '@/components/LoadingOrError';
+import { Steps } from '@/components/Steps';
 
-const DESKTOP_IMAGE_WIDTH_PERCENTAGE = 0.4
-const MOBILE_IMAGE_HEIGHT_PERCENTAGE = 0.3
+export function RecipeDetails() {
+  const { recipeSlug } = useParams();
 
-export function Details() {
-	const isTabletAndUp = useMediaQuery('(min-width: 600px)')
-	const {fruitName} = useParams()
+  const { data } = useSuspenseQuery({
+    queryFn: getRecipes,
+    queryKey: ['recipes'],
+  });
 
-	const {data} = useSuspenseQuery({
-		queryFn: getFruits,
-		queryKey: ['fruits']
-	})
+  const recipe = data?.find(r => r.slug === recipeSlug);
 
-	const fruit = data?.find(
-		f => f.name.toLowerCase() === fruitName?.toLowerCase()
-	)
-	if (!fruit) {
-		return <Navigate replace={true} to='/' />
-	}
+  const [isStarted, setIsStarted] = useState(false);
 
-	const imageWidth = isTabletAndUp
-		? window.innerWidth * DESKTOP_IMAGE_WIDTH_PERCENTAGE
-		: window.innerWidth
-	const imageHeight = isTabletAndUp
-		? window.innerHeight
-		: window.innerHeight * MOBILE_IMAGE_HEIGHT_PERCENTAGE
+  if (!recipe) {
+    const e = new Error(`Recipe not found: ${recipeSlug}`);
+    return <LoadingOrError error={e} />;
+  }
 
-	return (
-		<>
-			<Head title={fruit.name} />
-			<div className='flex min-h-screen flex-col items-center sm:flex-row'>
-				<div className='relative'>
-					<img
-						alt={fruit.name}
-						fetchPriority='high'
-						height={imageHeight}
-						src={`${fruit.image.url}&w=${imageWidth}&h=${imageHeight}`}
-						style={{
-							backgroundColor: fruit.image.color
-						}}
-						width={imageWidth}
-					/>
-					<ImageAttribution author={fruit.image.author} />
-				</div>
-				<div className='my-8 sm:my-0 sm:ml-16'>
-					<Link className='flex items-center' to='/'>
-						<img alt='' height={20} src='/icons/arrow-left.svg' width={20} />
-						<span className='ml-4 text-xl'>Back</span>
-					</Link>
-
-					<h1 className='mt-2 font-bold text-6xl sm:mt-8'>{fruit.name}</h1>
-					<h2 className='mt-3 text-gray-500 text-xl dark:text-gray-400'>
-						Vitamins per 100 g (3.5 oz)
-					</h2>
-					<table className='mt-8 text-lg'>
-						<thead>
-							<tr>
-								<th className='px-4 py-2'>Vitamin</th>
-								<th className='px-4 py-2'>Amount</th>
-							</tr>
-						</thead>
-						<tbody>
-							{fruit.metadata.map(({name, value}) => (
-								<tr className='font-medium' key={`FruitVitamin-${name}`}>
-									<td className='border border-gray-300 px-4 py-2'>{name}</td>
-									<td className='border border-gray-300 px-4 py-2'>{value}</td>
-								</tr>
-							))}
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</>
-	)
+  return (
+    <>
+      <Head title={recipe.name} />
+      <div className="mx-auto flex min-h-screen max-w-5xl flex-col items-center px-10">
+        <div className="my-8 flex">
+          <Image alt={recipe.name} src={recipe.image} width={250} />
+          <div className="ml-10">
+            <Heading className="mt-8 mb-2" level={1}>
+              {recipe.name}
+            </Heading>
+            <em>{recipe.credit}</em>
+          </div>
+        </div>
+        <div className="mb-4 flex w-full justify-start gap-10">
+          <div className="min-w-60">
+            <Ingredients
+              disabled={isStarted}
+              ingredients={recipe.ingredients}
+              portions={recipe.portions}
+            />
+            <div className="mt-4 flex justify-center">
+              <Button disabled={isStarted} onClick={() => setIsStarted(true)}>
+                Bake!
+              </Button>
+            </div>
+          </div>
+          <div className="mx-0">
+            {isStarted && <Steps steps={recipe.steps} />}
+          </div>
+        </div>
+      </div>
+    </>
+  );
 }
