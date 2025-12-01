@@ -53,7 +53,10 @@
       "linter": {
         "rules": {
           "correctness": {
-            "useExhaustiveDependencies": "error",
+            "useExhaustiveDependencies": {
+              "level":  "error",
+              "fix": "safe"
+            },
             "useHookAtTopLevel": "error",
             "useImportExtensions": "off",
             "useJsxKeyInIterable": "error"
@@ -66,6 +69,10 @@
               "options": {
                 "entropyThreshold": 100
               }
+            },
+            "useSortedClasses": {
+              "level": "warn",
+              "fix": "safe"
             }
           },
           "suspicious": {
