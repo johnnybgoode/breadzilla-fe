@@ -14,7 +14,7 @@ export function Button({
     : '';
   return (
     <button
-      className={`min-w-25 rounded bg-blue-500 p-3 text-white hover:bg-blue-700 hover:text-gray-50 ${className} ${disabledClasses}`}
+      className={`min-w-25 cursor-pointer rounded bg-blue-500 p-3 text-white hover:bg-blue-700 hover:text-gray-50 ${className} ${disabledClasses}`}
       type="button"
       {...rest}
     >
